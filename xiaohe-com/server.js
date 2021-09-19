@@ -4,7 +4,7 @@ var url = require('url')
 var port = process.argv[2]
 
 if (!port) {
-    console.log('ÇëÖ¸¶¨¶Ë¿ÚºÅºÃ²»À²£¿\nnode server.js 8888 ÕâÑù²»»áÂğ£¿')
+    console.log('è¯·æŒ‡å®šç«¯å£å·å¥½ä¸å•¦ï¼Ÿ\nnode server.js 8888 è¿™æ ·ä¸ä¼šå—ï¼Ÿ')
     process.exit(1)
 }
 
@@ -17,45 +17,30 @@ var server = http.createServer(function(request, response) {
     var query = parsedUrl.query
     var method = request.method
 
-    /******** ´ÓÕâÀï¿ªÊ¼¿´£¬ÉÏÃæ²»Òª¿´ ************/
+    /******** ä»è¿™é‡Œå¼€å§‹çœ‹ï¼Œä¸Šé¢ä¸è¦çœ‹ ************/
 
-    console.log('ÓĞ¸öÉµ×Ó·¢ÇëÇó¹ıÀ´À²£¡Â·¾¶£¨´ø²éÑ¯²ÎÊı£©Îª£º' + pathWithQuery)
+    console.log('æœ‰ä¸ªå‚»å­å‘è¯·æ±‚è¿‡æ¥å•¦ï¼è·¯å¾„ï¼ˆå¸¦æŸ¥è¯¢å‚æ•°ï¼‰ä¸ºï¼š' + pathWithQuery)
 
-    // ·ÃÎÊ¸ùÄ¿Â¼£¬ÏìÓ¦µÄÄÚÈİ
-    if (path === '/') {
-        response.statusCode = 200
-        response.setHeader('Content-Type', 'text/html;charset=utf-8')
-        response.write(`
-        <!DOCTYPE html>
-        <head>
-          <link rel="stylesheet" href="/x">
-        </head>
-        <body>
-        <h1>ÎÒµÄµÚÒ»¸öHTTPÇëÇó</h1>
-        <script src="/y"></script>
-        </body>
-        `)
-        response.end()
-    } else if (path === '/index.html') { // ·ÃÎÊ¸ùÄ¿Â¼´ø²éÑ¯²ÎÊı  ==> CSS code
-        response.statusCode = 200 // ×´Ì¬Âë
+    // è®¿é—®æ ¹ç›®å½•ï¼Œå“åº”çš„å†…å®¹
+    if (path === '/index.html') { // è®¿é—®æ ¹ç›®å½•å¸¦æŸ¥è¯¢å‚æ•°  ==> CSS code
+        response.statusCode = 200 // çŠ¶æ€ç 
         response.setHeader('Content-Type', 'text/html;charset=utf-8')
         response.write(fs.readFileSync("public/index.html"))
         response.end()
-    } else if (path === '/xiaohe.js') { // ·ÃÎÊ¸ùÄ¿Â¼´ø²éÑ¯²ÎÊı  ==> JS code
+    } else if (path === '/xiaohe.js') { // è®¿é—®æ ¹ç›®å½•å¸¦æŸ¥è¯¢å‚æ•°  ==> JS code
         response.statusCode = 200
         response.setHeader('Content-Type', 'text/javascript;charset=utf-8')
         response.write(fs.readFileSync("public/xiaohe.js"))
-        response.write()
         response.end()
     } else {
         response.statusCode = 404
-        response.setHeader('Content-Type', 'text/html;charset=utf-8')
-        response.write(`ÄãÊäÈëµÄÂ·¾¶²»´æÔÚ¶ÔÓ¦µÄÄÚÈİ`)
+        response.setHeader('Content-Type', 'text/html; charset=UTF-8')
+        response.write(`ä½ è¾“å…¥çš„è·¯å¾„ä¸å­˜åœ¨å¯¹åº”çš„å†…å®¹`)
         response.end()
     }
 
-    /******** ´úÂë½áÊø£¬ÏÂÃæ²»Òª¿´ ************/
+    /******** ä»£ç ç»“æŸï¼Œä¸‹é¢ä¸è¦çœ‹ ************/
 })
 
 server.listen(port)
-console.log('¼àÌı ' + port + ' ³É¹¦\nÇëÓÃÔÚ¿ÕÖĞ×ªÌå720¶ÈÈ»ºóÓÃµç·¹ìÒ´ò¿ª http://localhost:' + port)
+console.log('ç›‘å¬ ' + port + ' æˆåŠŸ\nè¯·ç”¨åœ¨ç©ºä¸­è½¬ä½“720åº¦ç„¶åç”¨ç”µé¥­ç…²æ‰“å¼€ http://localhost:' + port)

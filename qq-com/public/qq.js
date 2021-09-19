@@ -1,1 +1,10 @@
-console.log("qq.js")
+const request = new XMLHttpRequest();
+request.open("GET", "/friends.json");
+request.onreadystatechange = () => {
+    // 如果判断通过表示请求成功
+    if (request.readyState === 4 && request.status === 200) {
+        // 打印数据
+        console.log(request.response)
+    }
+}
+request.send()
