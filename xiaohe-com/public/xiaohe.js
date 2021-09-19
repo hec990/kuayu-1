@@ -1,11 +1,43 @@
-const request = new XMLHttpRequest();
-request.open("GET", "http://qq.com:8888/friends.json");
-request.onreadystatechange = () => {
-    // 如果判断通过表示请求成功
-    if (request.readyState === 4 && request.status === 200) {
-        // 打印数据
-        console.log(request.response)
-    }
+function ajax(method, url) {
+    return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.open(method, url);
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
+                    resolve(request.response);
+                } else {
+                    reject(request);
+                }
+            }
+        };
+        request.send();
+    });
+}
+ajax("get", "http://qq.com:8888/friends.json").then(response => {
+    console.log("这是 AJAX");
+    console.log(response);
+});
+
+
+function jsonp(url) {
+    return new Promise((resolve, reject) => {
+        const random = "frankJSONPCallbackName" + Math.random();
+        window[random] = data => {
+            resolve(data);
+        };
+        const script = document.createElement("script");
+        script.src = `${url}?callback=${random}`;
+        script.onload = () => {
+            script.remove();
+        };
+        script.onerror = () => {
+            reject();
+        };
+        document.body.appendChild(script);
+    });
 }
 
-request.send()
+jsonp("http://qq.com:8888/friends.js").then(data => {
+    console.log(data);
+});
